@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jyada Sharmao Matt</title>
+  <style>
+    :root{
+      --bg:#fff0f6;
+      --card:#ffffff;
+      --accent:#ff6b9a;
+      --accent-2:#ff8fb3;
+      --text:#3a2b3b;
+      --glass: rgba(255,255,255,0.6);
+      --shadow: 0 8px 30px rgba(60,15,40,0.12);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:linear-gradient(135deg,#fff8fb 0%,#fff0f6 100%); color:var(--text)}
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:40px}
+    .card{width:920px;max-width:96%;background:var(--card);border-radius:18px;padding:36px;box-shadow:var(--shadow);display:flex;gap:24px;align-items:center}
+    .left{flex:1}
+    .right{width:320px;display:flex;align-items:center;justify-content:center}
+
+    h1{margin:0 0 12px;font-size:34px;letter-spacing:-0.02em}
+    p.lead{margin:0 0 18px;color:#6b5262}
+
+    .buttons{display:flex;gap:16px}
+    .btn{border:0;padding:14px 22px;border-radius:999px;font-weight:700;cursor:pointer;outline:none;box-shadow:0 6px 18px rgba(90,20,50,0.06);transition:transform .15s ease,box-shadow .15s ease}
+    .btn:active{transform:translateY(2px)}
+    .btn-yes{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;font-size:18px}
+    .btn-no{background:transparent;border:2px solid #ffd6e6;color:#9b5670}
+
+    .note{margin-top:14px;color:#8a6a75;font-size:13px}
+
+    /* second screen */
+    .love-screen{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg, rgba(255,240,248,0.95), rgba(255,245,250,0.98));backdrop-filter: blur(4px);z-index:50;opacity:0;pointer-events:none;transition:opacity .5s ease}
+    .love-screen.show{opacity:1;pointer-events:auto}
+    .love-card{background:var(--card);padding:28px;border-radius:16px;box-shadow:var(--shadow);max-width:760px;width:95%;text-align:center}
+    .love-card h2{margin:0 0 10px;font-size:28px}
+    .love-card p{margin:0 0 18px;color:#6b5262}
+    .gif-wrap{width:100%;max-width:420px;margin:0 auto 6px}
+    .gif-wrap img{width:100%;border-radius:12px}
+
+    /* falling hearts */
+    .heart{position:fixed;top:-50px;pointer-events:none;z-index:60;opacity:0.9;font-size:20px;transform:translateY(-20px);animation:fall linear forwards}
+    @keyframes fall{
+      to{transform:translateY(110vh) rotate(360deg);opacity:0.95}
+    }
+
+    /* small responsive tweaks */
+    @media (max-width:680px){
+      .card{flex-direction:column;padding:22px}
+      .right{width:100%;order:-1}
+      h1{font-size:26px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="card" id="card">
+      <div class="left">
+        <h1>YOOOOO</h1>
+        <p class="lead">Sooo One Of Few Things. Kya aap meri Bahili Banna Chahenge?</p>
+        <div class="buttons">
+          <button class="btn btn-yes" id="yesBtn">Yes</button>
+          <button class="btn btn-no" id="noBtn">No</button>
+        </div>
+        
+      </div>
+      <div class="right">
+        <div style="text-align:center">
+          <svg width="140" height="140" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 21s-7.5-4.5-10-8a6.5 6.5 0 0110-8 6.5 6.5 0 0110 8c-2.5 3.5-10 8-10 8z" fill="#ffd6e6"/>
+            <path d="M9 11.5s1-1.5 3-1.5 3 1.5 3 1.5" stroke="#ff6b9a" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div style="font-size:13px;color:#9b5670;margin-top:8px">Made with lots of love, bakchodi and ChatGPT ki madad</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- second screen (hidden until 'Yes') -->
+  <div class="love-screen" id="loveScreen" aria-hidden="true">
+    <div class="love-card">
+      <h2>Ab me hu hi itna khas mna kyu hi karogi?</h2>
+      <p>Dekh I may be a bit chutiya, A bit Gareeb jiski jindagi aapne aake sahi krdi. But the thing is I can definitely promise you this that me kahi nhi jaunga, Kabhi Bhi. Baaki ye phool apke liye YOU FOOL.</p>
+
+      <div class="gif-wrap">
+        <!-- Cute gif; replace the src if you want a different gif -->
+        <img src="https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3a21ic2FvNmJrczAzY2p6MTdmZnRkd2doMml5dW1ncGU2MGtwdmFtbyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/m4nNkKCgQi2IsxUC2P/giphy.gif" alt="Flower"/>
+      </div>
+
+      <div style="margin-top:10px;">Aishiteru HEHEHEHEHE</div>
+    </div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const loveScreen = document.getElementById('loveScreen');
+
+    let growInterval = null;
+    let scale = 1;
+
+    function startGrowing(){
+      if(growInterval) return;
+      growInterval = setInterval(()=>{
+        scale += 0.07; // growth speed
+        yesBtn.style.transform = `scale(${scale})`;
+        yesBtn.style.boxShadow = `0 ${8*scale}px ${20*scale}px rgba(220,20,80,0.12)`;
+        // if it becomes enormous, slightly nudge page
+        if(scale > 3.5) yesBtn.style.transition = 'transform .05s linear';
+      },80);
+    }
+
+    function stopGrowing(){
+      if(!growInterval) return;
+      clearInterval(growInterval);
+      growInterval = null;
+    }
+
+    // When user clicks No -> start growth and also make No button do a tiny playful wobble
+    noBtn.addEventListener('click', (e)=>{
+      startGrowing();
+      // little jitter so it's playful
+      noBtn.animate([
+        { transform: 'translateX(0)' },
+        { transform: 'translateX(-14px)' },
+        { transform: 'translateX(10px)' },
+        { transform: 'translateX(0)' }
+      ], { duration: 420, easing: 'ease-out' });
+    });
+
+    // Also if they hover or try to move the mouse close to No, make Yes grow a bit as a tease
+    noBtn.addEventListener('mouseenter', ()=>{
+      // small immediate pop
+      scale += 0.12;
+      yesBtn.style.transform = `scale(${scale})`;
+    });
+
+    // Clicking Yes shows the love screen. Stop growth first and animate transition.
+    yesBtn.addEventListener('click', ()=>{
+      stopGrowing();
+      yesBtn.style.transition = 'transform .3s ease';
+      yesBtn.style.transform = 'scale(1.08)';
+
+      // show love screen after a tiny pause to let the button animate
+      setTimeout(()=>{
+        document.getElementById('card').style.filter = 'blur(2px)';
+        loveScreen.classList.add('show');
+        loveScreen.setAttribute('aria-hidden','false');
+        // start confetti hearts
+        launchHearts(30);
+      },260);
+    });
+
+    // Create falling hearts confetti
+    function launchHearts(count){
+      for(let i=0;i<count;i++){
+        createHeart(i);
+      }
+      // keep making a slow trickle for a moment
+      let extra = 0;
+      const addMore = setInterval(()=>{
+        createHeart(100+extra);
+        extra++;
+        if(extra>12) clearInterval(addMore);
+      },250);
+    }
+
+    function createHeart(seed){
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerHTML = '❤️';
+      const size = Math.random() * 22 + 14; // 14px - 36px
+      heart.style.fontSize = size + 'px';
+      const left = Math.random() * 100; // vw
+      heart.style.left = left + 'vw';
+      const duration = Math.random() * 4 + 3; // 3s - 7s
+      heart.style.animationDuration = duration + 's';
+      // slight rotation offset
+      heart.style.transform = `translateY(-20px) rotate(${Math.random()*60-30}deg)`;
+      document.body.appendChild(heart);
+      // remove after animation
+      setTimeout(()=>{ heart.remove(); }, (duration*1000)+800);
+    }
+
+    // Make the yes button return to normal size if the user resizes or leaves page and no growth is active
+    window.addEventListener('blur', stopGrowing);
+    window.addEventListener('resize', ()=>{ if(!growInterval){ scale = 1; yesBtn.style.transform = 'scale(1)'; } });
+
+    // Accessibility: keyboard handling
+    noBtn.addEventListener('keydown',(e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); noBtn.click(); }});
+    yesBtn.addEventListener('keydown',(e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); yesBtn.click(); }});
+
+  </script>
+</body>
+</html>
